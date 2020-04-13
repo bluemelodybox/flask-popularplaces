@@ -3,28 +3,28 @@ from flask import Flask, request, jsonify
 import populartimes
 import os, json
 from time import time
+from datetime import timedelta
 from glob import glob
+import redis
 
 app = Flask(__name__)
+r = redis.from_url(os.environ.get("REDIS_URL"))
+API_KEY = os.environ["GOOGLE_API_KEY"]
 
 # Display data collected
 @app.route("/")
 def index():
-    files = glob("./data/*.json")
-    files.sort(key=os.path.getmtime)
-    data = []
-    for fi in files:
-        with open(fi) as f:
-            d = json.load(f)
-        data.append(d)
+
+    keys = [k for k in  in r.scan_iter()]
+
     # More processing here
-    return jsonify(data)
+    return jsonify(keys)
 
 
 # Get data from google api
 @app.route("/api")
 def api():
-    API_KEY = os.environ["GOOGLE_API_KEY"]
+    
     places = [
         "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan park
         "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chongpang market
@@ -35,14 +35,8 @@ def api():
     creation_time = int(time())  # Get time of crawl
     res = [populartimes.get_id(API_KEY, place) for place in places]
     res.append(creation_time)
+    r.setex(str(creation_time), timedelta(hours=2), value=res)
 
-    files = glob("./data/*.json")
-    files.sort(key=os.path.getmtime)  # Earliest creation date first
-    if len(files) > 8:
-        os.remove(files[0])  # Remove earliest data
-        del files[0]
-    with open(f"./data/{creation_time}.json", "w") as f:
-        json.dump(res, f)
     return jsonify("Success")
 
 

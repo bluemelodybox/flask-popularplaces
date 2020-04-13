@@ -41,7 +41,7 @@ def api():
     #     data_list = []
     #     r.set(name="data_list", value=json.dumps(data_list))
 
-    if not r.exist("last_created_time"):
+    if not r.exists("last_created_time"):
         r.set(name="last_created_time", value=creation_time)
         r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
         # data_list = json.loads(r.get("data_list"))

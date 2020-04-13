@@ -17,10 +17,18 @@ API_KEY = os.environ["GOOGLE_API_KEY"]
 @app.route("/")
 def index():
 
-    keys = [k.decode("utf-8") for k in r.scan_iter()]
+    keys = [
+        int(k.decode("utf-8"))
+        for k in r.scan_iter()
+        if k.decode("utf-8") != "last_created_time"
+    ]
     print(keys)
+    keys.sort()
+    print(keys)
+    # results = [r.get()]
+    results = json.loads(r.get(str(keys[0])).decode("utf-8"))
     # More processing here
-    return jsonify(keys)
+    return jsonify(results)
 
 
 # Get data from google api
@@ -39,18 +47,16 @@ def api():
         res = [populartimes.get_id(API_KEY, place) for place in places]
         res.append(creation_time)
         r.set(name="last_created_time", value=creation_time)
-        r.setex(name=creation_time, time=timedelta(seconds=120), value=json.dumps(res))
+        r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
     else:
         last_created_time = int(r.get("last_created_time").decode("utf-8"))
-        if creation_time - last_created_time < 15:
+        if creation_time - last_created_time < 720:
             return jsonify("Failed, time too recent")
         else:
             res = [populartimes.get_id(API_KEY, place) for place in places]
             res.append(creation_time)
             r.set(name="last_created_time", value=creation_time)
-            r.setex(
-                name=creation_time, time=timedelta(seconds=120), value=json.dumps(res)
-            )
+            r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
 
     return jsonify("Success")
 

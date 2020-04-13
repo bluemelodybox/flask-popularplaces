@@ -3,7 +3,6 @@ from flask import Flask, request, jsonify
 import populartimes
 import os, json
 from time import time
-from datetime import datetime
 from glob import glob
 
 app = Flask(__name__)
@@ -35,7 +34,7 @@ def api():
     ]
     creation_time = int(time())  # Get time of crawl
     res = [populartimes.get_id(API_KEY, place) for place in places]
-    res.append(datetime.fromtimestamp(creation_time))
+    res.append(creation_time)
 
     files = glob("./data/*.json")
     files.sort(key=os.path.getmtime)  # Earliest creation date first

@@ -39,9 +39,9 @@ def index():
         "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan park
         "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex shopping mall
     ]
-    res = [populartimes.get_id(API_KEY, place) for place in places]
+    # res = [populartimes.get_id(API_KEY, place) for place in places]
 
-    return jsonify(res)
+    return jsonify(API_KEY)
 
 
 if __name__ == "__main__":

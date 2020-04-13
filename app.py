@@ -18,8 +18,9 @@ API_KEY = os.environ["GOOGLE_API_KEY"]
 def index():
 
     keys = [k for k in r.scan_iter()]
+    print(keys)
     # More processing here
-    return jsonify(keys)
+    return jsonify([1, 2, 3])
 
 
 # Get data from google api

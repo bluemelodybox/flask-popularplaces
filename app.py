@@ -15,7 +15,7 @@ API_KEY = os.environ["GOOGLE_API_KEY"]
 @app.route("/")
 def index():
 
-    keys = [k for k in  in r.scan_iter()]
+    keys = [k for k in r.scan_iter()]
 
     # More processing here
     return jsonify(keys)
@@ -24,7 +24,7 @@ def index():
 # Get data from google api
 @app.route("/api")
 def api():
-    
+
     places = [
         "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan park
         "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chongpang market

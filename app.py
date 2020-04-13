@@ -39,16 +39,18 @@ def api():
         res = [populartimes.get_id(API_KEY, place) for place in places]
         res.append(creation_time)
         r.set(name="last_created_time", value=creation_time)
-        r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
+        r.setex(name=creation_time, time=timedelta(seconds=120), value=json.dumps(res))
     else:
         last_created_time = int(r.get("last_created_time").decode("utf-8"))
-        if creation_time - last_created_time < 720:
+        if creation_time - last_created_time < 15:
             return jsonify("Failed, time too recent")
         else:
             res = [populartimes.get_id(API_KEY, place) for place in places]
             res.append(creation_time)
             r.set(name="last_created_time", value=creation_time)
-            r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
+            r.setex(
+                name=creation_time, time=timedelta(seconds=120), value=json.dumps(res)
+            )
 
     return jsonify("Success")
 

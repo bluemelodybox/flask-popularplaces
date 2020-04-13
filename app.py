@@ -17,10 +17,10 @@ API_KEY = os.environ["GOOGLE_API_KEY"]
 @app.route("/")
 def index():
 
-    keys = [k for k in r.scan_iter()]
+    keys = [k.decode("utf-8") for k in r.scan_iter()]
     print(keys)
     # More processing here
-    return jsonify([1, 2, 3])
+    return jsonify(keys)
 
 
 # Get data from google api
@@ -48,7 +48,7 @@ def api():
         # data_list = json.loads(r.get("data_list"))
         # data_list.append(creation_time)
     else:
-        last_created_time = r.get("last_created_time")
+        last_created_time = int(r.get("last_created_time").decode("utf-8"))
         if creation_time - last_created_time < 900:
             return jsonify("Failed, time too recent")
         else:

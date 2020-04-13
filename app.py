@@ -15,7 +15,8 @@ API_KEY = os.environ["GOOGLE_API_KEY"]
 @app.route("/")
 def index():
 
-    keys = [k for k in r.scan_iter()]
+    # keys = [k for k in r.scan_iter()]
+    keys = "a"
 
     # More processing here
     return jsonify(keys)

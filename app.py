@@ -18,7 +18,6 @@ API_KEY = os.environ["GOOGLE_API_KEY"]
 def index():
 
     keys = [k for k in r.scan_iter()]
-
     # More processing here
     return jsonify(keys)
 
@@ -34,10 +33,26 @@ def api():
         "ChIJP7z00McZ2jERJztQqXkRIC4",  # Mustafa centre
         "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex shopping mall
     ]
-    creation_time = int(time())  # Get time of crawl
+    creation_time = int(time())  # Get time of crawl without milliseconds
     res = [populartimes.get_id(API_KEY, place) for place in places]
     res.append(creation_time)
-    r.setex(str(creation_time), timedelta(hours=2), value=res)
+
+    # if not r.exists("data_list"):
+    #     data_list = []
+    #     r.set(name="data_list", value=json.dumps(data_list))
+
+    if not r.exist("last_created_time"):
+        r.set(name="last_created_time", value=creation_time)
+        r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
+        # data_list = json.loads(r.get("data_list"))
+        # data_list.append(creation_time)
+    else:
+        last_created_time = r.get("last_created_time")
+        if creation_time - last_created_time < 900:
+            return jsonify("Failed, time too recent")
+        else:
+            r.set(name="last_created_time", value=creation_time)
+            r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
 
     return jsonify("Success")
 

@@ -5,7 +5,7 @@ import os, json
 from time import time
 from datetime import timedelta
 from glob import glob
-from urlparse import urlparse
+from urllib.parse import urlparse
 import redis
 
 app = Flask(__name__)

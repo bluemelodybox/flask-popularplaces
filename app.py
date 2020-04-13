@@ -4,7 +4,6 @@ import populartimes
 import os, json
 from time import time
 from datetime import timedelta
-from glob import glob
 from urllib.parse import urlparse
 import redis
 
@@ -22,11 +21,9 @@ def index():
         for k in r.scan_iter()
         if k.decode("utf-8") != "last_created_time"
     ]
-    print(keys)
     keys.sort()
     print(keys)
-    # results = [r.get()]
-    results = json.loads(r.get(str(keys[0])).decode("utf-8"))
+    results = [json.loads(r.get(str(k))).decode("utf-8") for k in keys]
     # More processing here
     return jsonify(results)
 

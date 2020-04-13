@@ -42,7 +42,7 @@ def api():
     if len(files) > 8:
         os.remove(files[0])  # Remove earliest data
         del files[0]
-    with open(f"./data/{creation_time}.json") as f:
+    with open(f"./data/{creation_time}.json", "w") as f:
         json.dump(res, f)
     return jsonify("Success")
 

@@ -35,23 +35,18 @@ def api():
         "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex shopping mall
     ]
     creation_time = int(time())  # Get time of crawl without milliseconds
-    res = [populartimes.get_id(API_KEY, place) for place in places]
-    res.append(creation_time)
-
-    # if not r.exists("data_list"):
-    #     data_list = []
-    #     r.set(name="data_list", value=json.dumps(data_list))
-
     if not r.exists("last_created_time"):
+        res = [populartimes.get_id(API_KEY, place) for place in places]
+        res.append(creation_time)
         r.set(name="last_created_time", value=creation_time)
         r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
-        # data_list = json.loads(r.get("data_list"))
-        # data_list.append(creation_time)
     else:
         last_created_time = int(r.get("last_created_time").decode("utf-8"))
-        if creation_time - last_created_time < 900:
+        if creation_time - last_created_time < 720:
             return jsonify("Failed, time too recent")
         else:
+            res = [populartimes.get_id(API_KEY, place) for place in places]
+            res.append(creation_time)
             r.set(name="last_created_time", value=creation_time)
             r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
 

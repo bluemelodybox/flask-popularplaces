@@ -23,7 +23,7 @@ def index():
     ]
     keys.sort()
     print(keys)
-    results = [json.loads(r.get(str(k))).decode("utf-8") for k in keys]
+    results = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
     # More processing here
     return jsonify(results)
 

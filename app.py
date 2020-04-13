@@ -5,18 +5,19 @@ import os, json
 from time import time
 from datetime import timedelta
 from glob import glob
+from urlparse import urlparse
 import redis
 
 app = Flask(__name__)
-r = redis.from_url(os.environ.get("REDIS_URL"))
+url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
+r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 API_KEY = os.environ["GOOGLE_API_KEY"]
 
 # Display data collected
 @app.route("/")
 def index():
 
-    # keys = [k for k in r.scan_iter()]
-    keys = "a"
+    keys = [k for k in r.scan_iter()]
 
     # More processing here
     return jsonify(keys)

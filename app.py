@@ -32,7 +32,7 @@ def display_data():
     data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
     # More processing here
     return jsonify(
-        {"mapData": data, "lastUpdatedTime": datetime.fromtimestamp(data[0][-1])}
+        {"mapData": data, "lastUpdatedTime": datetime.fromtimestamp(data[-1][-1])}
     )
 
 

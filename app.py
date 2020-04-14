@@ -13,6 +13,23 @@ r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 API_KEY = os.environ["GOOGLE_API_KEY"]
 
 
+def get_color(name, trend):
+    t0, t1, t2 = trend[name]
+    print(name, t0, t1, t2)
+    if t0 >= t1 >= t2:  # Croud decreasing
+        return "#228B22"  # Green color
+    elif t0 <= t1 <= t2:  # Croud increasing
+        return "#DC143C"  # Red color
+    else:
+        return "#0088cc"
+
+
+def normalize_size(current_pop):
+    if current_pop == 0:
+        return 0
+    return (current_pop / 100) + 0.5
+
+
 @app.route("/")
 def index():
     return "<h1>Popularplaces API<h1>"
@@ -30,9 +47,24 @@ def display_data():
     keys.sort()  # Earliest date first
     print(keys)
     data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
-    # More processing here
+
+    trend = {location["name"]: [] for location in data[-1][:-1]}
+    for t in data[-3:]:
+        for location in t[:-1]:
+            trend[location["name"]].append(location.get("current_popularity", 0))
+
+    map_data = [
+        {
+            "title": location["name"],
+            "latitude": location["coordinates"]["lat"],
+            "longitude": location["coordinates"]["lng"],
+            "size": normalize_size(location.get("current_popularity", 0)),
+            "color": get_color(location["name"], trend),
+        }
+        for location in data[-1][:-1]
+    ]
     return jsonify(
-        {"mapData": data, "lastUpdatedTime": datetime.fromtimestamp(data[-1][-1])}
+        {"mapData": map_data, "lastUpdatedTime": datetime.fromtimestamp(data[-1][-1])}
     )
 
 

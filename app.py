@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 import populartimes
 import os, json
 from time import time
-from datetime import timedelta
+from datetime import timedelta, datetime
 from urllib.parse import urlparse
 import redis
 
@@ -27,11 +27,13 @@ def display_data():
         for k in r.scan_iter()
         if k.decode("utf-8") != "last_created_time"
     ]
-    keys.sort()
+    keys.sort()  # Earliest date first
     print(keys)
-    results = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
+    data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
     # More processing here
-    return jsonify(results)
+    return jsonify(
+        {"mapData": data, "lastUpdatedTime": datetime.fromtimestamp(data[0][-1])}
+    )
 
 
 # Get data from google api

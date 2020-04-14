@@ -12,9 +12,15 @@ url = urlparse(os.environ.get("REDISCLOUD_URL"))
 r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 API_KEY = os.environ["GOOGLE_API_KEY"]
 
-# Display data collected
+
 @app.route("/")
 def index():
+    return "<h1>Popularplaces API<h1>"
+
+
+# Display data collected
+@app.route("/data/")
+def display_data():
 
     keys = [
         int(k.decode("utf-8"))
@@ -29,8 +35,8 @@ def index():
 
 
 # Get data from google api
-@app.route("/api")
-def api():
+@app.route("/fetch/")
+def fetch_data():
 
     places = [
         "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan park

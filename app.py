@@ -38,6 +38,13 @@ def index():
     return "<h1>Popularplaces API<h1>"
 
 
+@app.delete("/")
+def delete():
+    for keys in r.scan_iter():
+        r.delete(key)
+    return jsonify("deleted")
+
+
 @app.route("/raw/")
 def raw_data():
     keys = [
@@ -158,7 +165,7 @@ def fetch_data():
         r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
     else:
         last_created_time = int(r.get("last_created_time").decode("utf-8"))
-        if creation_time - last_created_time < 720:
+        if creation_time - last_created_time < 280:
             return jsonify("Failed, time too recent")
         else:
             res = []

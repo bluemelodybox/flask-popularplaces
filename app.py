@@ -14,8 +14,8 @@ API_KEY = os.environ["GOOGLE_API_KEY"]
 
 
 def get_color(name, trend):
-    if len(trend[name]) == 3:
-        t0, t1, t2 = trend[name]
+    if len(trend[name][-3:]) == 3:
+        t0, t1, t2 = trend[name][-3:]
         print(name, t0, t1, t2)
         if t0 >= t1 >= t2:  # Croud decreasing
             return "#228B22"  # Green color
@@ -38,11 +38,11 @@ def index():
     return "<h1>Popularplaces API<h1>"
 
 
-# @app.route("/delete/")
-# def delete():
-#     for k in r.scan_iter():
-#         r.delete(k)
-#     return jsonify("deleted")
+@app.route("/delete/")
+def delete():
+    for k in r.scan_iter():
+        r.delete(k)
+    return jsonify("deleted")
 
 
 @app.route("/raw/")
@@ -70,14 +70,10 @@ def display_data():
     data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
 
     trend = {location["name"]: [] for location in data[-1]}
-    for t in data[-3:]:
-        for location in t:
-            trend[location["name"]].append(location.get("current_popularity", 0))
-
-    trend_8 = {location["name"]: [] for location in data[-1]}
     for t in data:
         for location in t:
-            trend_8[location["name"]].append(location.get("current_popularity", 0))
+            if trend.get(location["name"]) != None:
+                trend[location["name"]].append(location.get("current_popularity", 0))
 
     map_data = [
         {
@@ -97,7 +93,7 @@ def display_data():
             "current": v[-1],
             "previous": v[-2],
         }
-        for i, (k, v) in enumerate(trend_8.items())
+        for i, (k, v) in enumerate(trend.items())
     ]
     return jsonify(
         {

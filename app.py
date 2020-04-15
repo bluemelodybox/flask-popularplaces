@@ -91,16 +91,54 @@ def display_data():
 @app.route("/fetch/")
 def fetch_data():
 
-    places = [
-        "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan park
-        "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chongpang market
-        "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # Ion Orchard mall
-        "ChIJP7z00McZ2jERJztQqXkRIC4",  # Mustafa centre
-        "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex shopping mall
-    ]
+    # places = [
+    #     "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan park
+    #     "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chongpang market
+    #     "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # Ion Orchard mall
+    #     "ChIJP7z00McZ2jERJztQqXkRIC4",  # Mustafa centre
+    #     "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex shopping mall
+    # ]
+
+    places = {
+        "Parks": [
+            "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan AMK Park
+            "ChIJs3oprUQQ2jERp8A9mbkPZJE",  # Bukit Batok Nature Park
+            "ChIJNTlhccg92jERBftThrByZK0",  # Pasir Ris Town Park
+            "ChIJVSYjJKIZ2jERpRFinATD52s",  # Fort Canning Park
+            "ChIJOXfMU-ob2jERylk7sJHYvIY",  # Labrador Nature Reserve
+        ],
+        "Market": [
+            "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chong Pang Market
+            "ChIJBYEYQR0X2jERTlmOUoDyW5c",  # 409 AMK Market
+            "ChIJwwQ3jwET2jERQ7cbQ6ZHDpQ",  # Marsiling Market
+            "ChIJyzfPULoZ2jERCEVmhtL9I8g",  # Albert Centre Market
+            "ChIJHabbDPsP2jEROQtuba0GHhc",  # Taman Jurong Market
+        ],
+        "Malls": [
+            "ChIJP7z00McZ2jERJztQqXkRIC4",  # Mustafa
+            "ChIJR1Fyfr0Z2jERzwO-AZiJ-HM",  # Plaza Singapura
+            "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # ION orchard
+            "ChIJb20nHg8Q2jERuBnOGGnuq-s",  # JEM
+            "ChIJzxwZERgY2jER2FX37qmG49Q",  # Paya Lebar Square
+        ],
+        "Mrt": [
+            "ChIJMSKsChcX2jERPC0Poz3FmWg",  # Serangoon Station
+            "ChIJC4cARUIa2jERBJvOk5gwWlM",  # Bouna Vista Station
+            "ChIJuz41c7AZ2jERgl25Ot0ZuJw",  # Bugis Station
+            "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK Station
+            "ChIJiWOMEd4V2jERGpO2In3q6iw",  # Yishun Station
+        ],
+    }
+
+
     creation_time = int(time())  # Get time of crawl without milliseconds
     if not r.exists("last_created_time"):
-        res = [populartimes.get_id(API_KEY, place) for place in places]
+        # res = [populartimes.get_id(API_KEY, place) for place in places]
+        res = []
+
+        for key in places:
+            for p in places[key]:
+                res.append(populartimes.get_id(API_KEY, p))
         res.append(creation_time)
         r.set(name="last_created_time", value=creation_time)
         r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
@@ -109,8 +147,10 @@ def fetch_data():
         if creation_time - last_created_time < 720:
             return jsonify("Failed, time too recent")
         else:
-            res = [populartimes.get_id(API_KEY, place) for place in places]
-            res.append(creation_time)
+            res = []
+            for key in places:
+                for p in places[key]:
+                    res.append(populartimes.get_id(API_KEY, p))
             r.set(name="last_created_time", value=creation_time)
             r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
 

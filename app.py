@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 import populartimes
 import os, json
 from time import time
@@ -112,14 +112,6 @@ def display_data():
 # Get data from google api
 @app.route("/fetch/")
 def fetch_data():
-
-    # places = [
-    #     "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan park
-    #     "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chongpang market
-    #     "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # Ion Orchard mall
-    #     "ChIJP7z00McZ2jERJztQqXkRIC4",  # Mustafa centre
-    #     "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex shopping mall
-    # ]
 
     places = {
         "Parks": [

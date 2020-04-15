@@ -53,6 +53,11 @@ def display_data():
         for location in t[:-1]:
             trend[location["name"]].append(location.get("current_popularity", 0))
 
+    trend_8 = {location["name"]: [] for location in data[-1][:-1]}
+    for t in data:
+        for location in t[:-1]:
+            trend_8[location["name"]].append(location.get("current_popularity", 0))
+
     map_data = [
         {
             "title": location["name"],
@@ -63,8 +68,22 @@ def display_data():
         }
         for location in data[-1][:-1]
     ]
+
+    line_data = [
+        {
+            "location": k,
+            "popularity": [{"popularity": hour} for hour in v],
+            "current": v[-1],
+            "previous": v[-2],
+        }
+        for i, (k, v) in enumerate(trend_8.items())
+    ]
     return jsonify(
-        {"mapData": map_data, "lastUpdatedTime": datetime.fromtimestamp(data[-1][-1])}
+        {
+            "mapData": map_data,
+            "lastUpdatedTime": datetime.fromtimestamp(data[-1][-1]),
+            "lineData": line_data,
+        }
     )
 
 

@@ -14,12 +14,15 @@ API_KEY = os.environ["GOOGLE_API_KEY"]
 
 
 def get_color(name, trend):
-    t0, t1, t2 = trend[name]
-    print(name, t0, t1, t2)
-    if t0 >= t1 >= t2:  # Croud decreasing
-        return "#228B22"  # Green color
-    elif t0 <= t1 <= t2:  # Croud increasing
-        return "#DC143C"  # Red color
+    if len(trend[name]) == 3:
+        t0, t1, t2 = trend[name]
+        print(name, t0, t1, t2)
+        if t0 >= t1 >= t2:  # Croud decreasing
+            return "#228B22"  # Green color
+        elif t0 <= t1 <= t2:  # Croud increasing
+            return "#DC143C"  # Red color
+        else:
+            return "#0088cc"
     else:
         return "#0088cc"
 

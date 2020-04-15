@@ -67,17 +67,16 @@ def display_data():
         if k.decode("utf-8") != "last_created_time"
     ]
     keys.sort()  # Earliest date first
-    print(keys)
     data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
 
-    trend = {location["name"]: [] for location in data[-1][:-1]}
+    trend = {location["name"]: [] for location in data[-1]}
     for t in data[-3:]:
-        for location in t[:-1]:
+        for location in t:
             trend[location["name"]].append(location.get("current_popularity", 0))
 
-    trend_8 = {location["name"]: [] for location in data[-1][:-1]}
+    trend_8 = {location["name"]: [] for location in data[-1]}
     for t in data:
-        for location in t[:-1]:
+        for location in t:
             trend_8[location["name"]].append(location.get("current_popularity", 0))
 
     map_data = [
@@ -88,7 +87,7 @@ def display_data():
             "size": normalize_size(location.get("current_popularity", 0)),
             "color": get_color(location["name"], trend),
         }
-        for location in data[-1][:-1]
+        for location in data[-1]
     ]
 
     line_data = [
@@ -103,72 +102,10 @@ def display_data():
     return jsonify(
         {
             "mapData": map_data,
-            "lastUpdatedTime": datetime.fromtimestamp(data[-1][-1]),
+            "lastUpdatedTime": datetime.fromtimestamp(keys[-1]),
             "lineData": line_data,
         }
     )
-
-
-# Get data from google api
-@app.route("/fetch/")
-def fetch_data():
-
-    places = {
-        "Parks": [
-            "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan AMK Park
-            "ChIJs3oprUQQ2jERp8A9mbkPZJE",  # Bukit Batok Nature Park
-            "ChIJNTlhccg92jERBftThrByZK0",  # Pasir Ris Town Park
-            "ChIJVSYjJKIZ2jERpRFinATD52s",  # Fort Canning Park
-            "ChIJOXfMU-ob2jERylk7sJHYvIY",  # Labrador Nature Reserve
-        ],
-        "Market": [
-            "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chong Pang Market
-            "ChIJBYEYQR0X2jERTlmOUoDyW5c",  # 409 AMK Market
-            "ChIJwwQ3jwET2jERQ7cbQ6ZHDpQ",  # Marsiling Market
-            "ChIJyzfPULoZ2jERCEVmhtL9I8g",  # Albert Centre Market
-            "ChIJHabbDPsP2jEROQtuba0GHhc",  # Taman Jurong Market
-        ],
-        "Malls": [
-            "ChIJP7z00McZ2jERJztQqXkRIC4",  # Mustafa
-            "ChIJR1Fyfr0Z2jERzwO-AZiJ-HM",  # Plaza Singapura
-            "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # ION orchard
-            "ChIJb20nHg8Q2jERuBnOGGnuq-s",  # JEM
-            "ChIJzxwZERgY2jER2FX37qmG49Q",  # Paya Lebar Square
-        ],
-        "Mrt": [
-            "ChIJP6_oVKEX2jER8tuSBXrr2es",  # Serangoon Station
-            "ChIJsQvqY0Ia2jER_QrezH_adnY",  # Bouna Vista Station
-            "ChIJv7v_qp0Z2jER41auJd1oiSg",  # Bugis Station
-            "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK Station
-            "ChIJiWOMEd4V2jERGpO2In3q6iw",  # Yishun Station
-        ],
-    }
-
-    creation_time = int(time())  # Get time of crawl without milliseconds
-    if not r.exists("last_created_time"):
-        # res = [populartimes.get_id(API_KEY, place) for place in places]
-        res = []
-
-        for key in places:
-            for p in places[key]:
-                res.append(populartimes.get_id(API_KEY, p))
-        res.append(creation_time)
-        r.set(name="last_created_time", value=creation_time)
-        r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
-    else:
-        last_created_time = int(r.get("last_created_time").decode("utf-8"))
-        if creation_time - last_created_time < 280:
-            return jsonify("Failed, time too recent")
-        else:
-            res = []
-            for key in places:
-                for p in places[key]:
-                    res.append(populartimes.get_id(API_KEY, p))
-            res.append(creation_time)
-            r.set(name="last_created_time", value=creation_time)
-            r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
-
-    return jsonify("Success")
 
 
 if __name__ == "__main__":

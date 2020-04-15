@@ -46,7 +46,6 @@ def raw_data():
         if k.decode("utf-8") != "last_created_time"
     ]
     keys.sort()  # Earliest date first
-    print(keys)
     data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
     return jsonify(data)
 
@@ -138,9 +137,9 @@ def fetch_data():
             "ChIJzxwZERgY2jER2FX37qmG49Q",  # Paya Lebar Square
         ],
         "Mrt": [
-            "ChIJMSKsChcX2jERPC0Poz3FmWg",  # Serangoon Station
-            "ChIJC4cARUIa2jERBJvOk5gwWlM",  # Bouna Vista Station
-            "ChIJuz41c7AZ2jERgl25Ot0ZuJw",  # Bugis Station
+            "ChIJP6_oVKEX2jER8tuSBXrr2es",  # Serangoon Station
+            "ChIJsQvqY0Ia2jER_QrezH_adnY",  # Bouna Vista Station
+            "ChIJv7v_qp0Z2jER41auJd1oiSg",  # Bugis Station
             "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK Station
             "ChIJiWOMEd4V2jERGpO2In3q6iw",  # Yishun Station
         ],

@@ -130,7 +130,6 @@ def fetch_data():
         ],
     }
 
-
     creation_time = int(time())  # Get time of crawl without milliseconds
     if not r.exists("last_created_time"):
         # res = [populartimes.get_id(API_KEY, place) for place in places]
@@ -151,6 +150,7 @@ def fetch_data():
             for key in places:
                 for p in places[key]:
                     res.append(populartimes.get_id(API_KEY, p))
+            res.append(creation_time)
             r.set(name="last_created_time", value=creation_time)
             r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
 

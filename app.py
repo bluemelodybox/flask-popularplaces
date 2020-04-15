@@ -36,7 +36,7 @@ def index():
 
 
 @app.route("/delete/")
-def index():
+def delete():
     for key in r.scan_iter():
         r.delete(key)
     return "redis keys deleted"

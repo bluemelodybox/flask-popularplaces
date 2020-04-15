@@ -40,8 +40,8 @@ def index():
 
 @app.delete("/")
 def delete():
-    for keys in r.scan_iter():
-        r.delete(key)
+    for k in r.scan_iter():
+        r.delete(k)
     return jsonify("deleted")
 
 

@@ -32,9 +32,27 @@ def normalize_size(current_pop):
 
 @app.route("/")
 def index():
+    return "<h1>Popularplaces API<h1>"
+
+
+@app.route("/delete/")
+def index():
     for key in r.scan_iter():
         r.delete(key)
-    return "<h1>Popularplaces API<h1>"
+    return "redis keys deleted"
+
+
+@app.route("/raw/")
+def raw_data():
+    keys = [
+        int(k.decode("utf-8"))
+        for k in r.scan_iter()
+        if k.decode("utf-8") != "last_created_time"
+    ]
+    keys.sort()  # Earliest date first
+    print(keys)
+    data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
+    return jsonify(data)
 
 
 # Display data collected

@@ -32,6 +32,8 @@ def normalize_size(current_pop):
 
 @app.route("/")
 def index():
+    for key in r.scan_iter():
+        r.delete(key)
     return "<h1>Popularplaces API<h1>"
 
 

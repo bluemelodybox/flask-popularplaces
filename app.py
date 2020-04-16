@@ -33,6 +33,12 @@ def normalize_size(current_pop):
     return (current_pop / 100) + 0.5
 
 
+def get_prev_popularity(v):
+    if len(v) > 1:
+        return v[-2]
+    return 101
+
+
 @app.route("/")
 def index():
     return "<h1>Popularplaces API<h1>"
@@ -84,7 +90,7 @@ def display_data():
             "location": k,
             "popularity": [{"popularity": hour} for hour in v],
             "current": v[-1],
-            "previous": v[-2],
+            "previous": get_prev_popularity(v),
         }
         for i, (k, v) in enumerate(trend.items())
     ]

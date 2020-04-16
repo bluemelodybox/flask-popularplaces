@@ -47,7 +47,6 @@ def timed_job():
 
     creation_time = int(time())  # Get time of crawl without milliseconds
     if not r.exists("last_created_time"):
-        # res = [populartimes.get_id(API_KEY, place) for place in places]
         res = []
 
         for key in places:
@@ -66,7 +65,6 @@ def timed_job():
                     res.append(populartimes.get_id(API_KEY, p))
             r.set(name="last_created_time", value=creation_time)
             r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
-
     return "success"
 
 

@@ -38,13 +38,6 @@ def index():
     return "<h1>Popularplaces API<h1>"
 
 
-# @app.route("/delete/")
-# def delete():
-#     for k in r.scan_iter():
-#         r.delete(k)
-#     return jsonify("deleted")
-
-
 @app.route("/raw/")
 def raw_data():
     keys = [

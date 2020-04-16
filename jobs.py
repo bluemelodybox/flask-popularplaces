@@ -52,6 +52,8 @@ def timed_job():
         for key in places:
             for p in places[key]:
                 res.append(populartimes.get_id(API_KEY, p))
+        for p in res:
+            p["created_time"] = creation_time
         r.set(name="last_created_time", value=creation_time)
         r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
     else:
@@ -63,6 +65,8 @@ def timed_job():
             for key in places:
                 for p in places[key]:
                     res.append(populartimes.get_id(API_KEY, p))
+            for p in res:
+                p["created_time"] = creation_time
             r.set(name="last_created_time", value=creation_time)
             r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
     return "success"

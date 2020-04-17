@@ -16,25 +16,25 @@ def timed_job():
     API_KEY = os.environ["GOOGLE_API_KEY"]
     places = {
         "Parks": [
+            "ChIJ0QX_Brki2jER-pZKNdqk_a8",  # East Coast Park
+            "ChIJQ8uk4vwa2jERqMrT6OFBMuw",  # West Coast Park
             "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan AMK Park
-            "ChIJs3oprUQQ2jERp8A9mbkPZJE",  # Bukit Batok Nature Park
-            "ChIJNTlhccg92jERBftThrByZK0",  # Pasir Ris Town Park
+            "ChIJvWDbfRwa2jERgNnTOpAU3-o",  # Singapore Botanic Gardens
             "ChIJVSYjJKIZ2jERpRFinATD52s",  # Fort Canning Park
-            "ChIJOXfMU-ob2jERylk7sJHYvIY",  # Labrador Nature Reserve
         ],
         "Market": [
             "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chong Pang Market
-            "ChIJBYEYQR0X2jERTlmOUoDyW5c",  # 409 AMK Market
-            "ChIJwwQ3jwET2jERQ7cbQ6ZHDpQ",  # Marsiling Market
+            "ChIJo6zVvtwP2jERyf2Nuhm97cM",  # Jurong West 505 Market & Food Centre
+            "ChIJ9YySoRAY2jERp62zayDnKuM",  # Malay Market
+            "ChIJseQsTQ0Z2jERqpBTWF0Zf84",  # Maxwell Food Centre
             "ChIJyzfPULoZ2jERCEVmhtL9I8g",  # Albert Centre Market
-            "ChIJHabbDPsP2jEROQtuba0GHhc",  # Taman Jurong Market
         ],
         "Malls": [
-            "ChIJP7z00McZ2jERJztQqXkRIC4",  # Mustafa
-            "ChIJR1Fyfr0Z2jERzwO-AZiJ-HM",  # Plaza Singapura
+            "ChIJ20X__K4Z2jERRE8GRs-d8HE",  # Suntec City
             "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # ION orchard
-            "ChIJb20nHg8Q2jERuBnOGGnuq-s",  # JEM
-            "ChIJzxwZERgY2jER2FX37qmG49Q",  # Paya Lebar Square
+            "ChIJK7xLl1gZ2jERP_GdUY9XNLo",  # Vivo City
+            "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex Shopping Mall
+            "ChIJa9YM2-wP2jERmOUStQKyiS0",  # Jurong Point 
         ],
         "Mrt": [
             "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK Station

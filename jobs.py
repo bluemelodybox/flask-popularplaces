@@ -37,11 +37,7 @@ def timed_job():
             "ChIJzxwZERgY2jER2FX37qmG49Q",  # Paya Lebar Square
         ],
         "Mrt": [
-            "ChIJP6_oVKEX2jER8tuSBXrr2es",  # Serangoon Station
-            "ChIJsQvqY0Ia2jER_QrezH_adnY",  # Bouna Vista Station
-            "ChIJv7v_qp0Z2jER41auJd1oiSg",  # Bugis Station
             "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK Station
-            "ChIJiWOMEd4V2jERGpO2In3q6iw",  # Yishun Station
         ],
     }
 

@@ -49,7 +49,7 @@ def timed_job():
         for p in places[key]:
             places_data = populartimes.get_id(API_KEY, p)
             places_data["created_time"] = creation_time
-            places_data["types"] = key
+            places_data["type"] = key
             res.append(places_data)
     r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
     return "success"

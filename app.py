@@ -60,15 +60,12 @@ def raw_data():
 @app.route("/data/")
 def display_data():
 
-    keys = [
-        int(k.decode("utf-8"))
-        for k in r.scan_iter()
-        if k.decode("utf-8") != "last_created_time"
-    ]
+    keys = [int(k.decode("utf-8")) for k in r.scan_iter()]
     keys.sort()  # Earliest date first
     data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
 
     trend = {location["name"]: [] for location in data[-1]}
+    address = {location["name"]: location["address"] for location in data[-1]}
     for t in data:
         for location in t:
             if trend.get(location["name"]) != None:
@@ -88,6 +85,7 @@ def display_data():
     line_data = [
         {
             "location": k,
+            "address": address[k],
             "popularity": [{"popularity": hour} for hour in v],
             "current": v[-1],
             "previous": get_prev_popularity(v),

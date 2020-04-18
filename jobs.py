@@ -2,7 +2,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import populartimes
 import os, json
 from time import time
-from datetime import timedelta, datetime
+from datetime import timedelta
 from urllib.parse import urlparse
 import redis
 
@@ -14,8 +14,9 @@ def timed_job():
     url = urlparse(os.environ.get("REDISCLOUD_URL"))
     r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
     API_KEY = os.environ["GOOGLE_API_KEY"]
+
     places = {
-        "Parks": [
+        "Park": [
             "ChIJ0QX_Brki2jER-pZKNdqk_a8",  # East Coast Park
             "ChIJQ8uk4vwa2jERqMrT6OFBMuw",  # West Coast Park
             "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan AMK Park
@@ -29,43 +30,28 @@ def timed_job():
             "ChIJseQsTQ0Z2jERqpBTWF0Zf84",  # Maxwell Food Centre
             "ChIJyzfPULoZ2jERCEVmhtL9I8g",  # Albert Centre Market
         ],
-        "Malls": [
+        "Shopping Mall": [
             "ChIJ20X__K4Z2jERRE8GRs-d8HE",  # Suntec City
             "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # ION orchard
             "ChIJK7xLl1gZ2jERP_GdUY9XNLo",  # Vivo City
             "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex Shopping Mall
-            "ChIJa9YM2-wP2jERmOUStQKyiS0",  # Jurong Point 
+            "ChIJa9YM2-wP2jERmOUStQKyiS0",  # Jurong Point
         ],
-        "Mrt": [
+        "Mrt Station": [
             "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK Station
-            "ChIJn0ZzleYW2jERBt5hM27FAkw",  # AMK Station
+            "ChIJf9yot4cX2jERNWnz7pUJ0lM",  # AMK Station
         ],
     }
 
+    res = []
     creation_time = int(time())  # Get time of crawl without milliseconds
-    if not r.exists("last_created_time"):
-        res = []
-
-        for key in places:
-            for p in places[key]:
-                res.append(populartimes.get_id(API_KEY, p))
-        for p in res:
-            p["created_time"] = creation_time
-        r.set(name="last_created_time", value=creation_time)
-        r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
-    else:
-        last_created_time = int(r.get("last_created_time").decode("utf-8"))
-        if creation_time - last_created_time < 280:
-            return "Time too close"
-        else:
-            res = []
-            for key in places:
-                for p in places[key]:
-                    res.append(populartimes.get_id(API_KEY, p))
-            for p in res:
-                p["created_time"] = creation_time
-            r.set(name="last_created_time", value=creation_time)
-            r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
+    for key in places:
+        for p in places[key]:
+            places_data = populartimes.get_id(API_KEY, p)
+            places_data["created_time"] = creation_time
+            places_data["types"] = key
+            res.append(places_data)
+    r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
     return "success"
 
 

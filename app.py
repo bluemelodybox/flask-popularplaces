@@ -75,7 +75,6 @@ def display_data():
     trend = {
         location["name"]: {
             "popularity": [],
-            "address": location["address"],
             "type": location["type"],
             "current": location.get("current_popularity", 0),
         }
@@ -96,6 +95,13 @@ def display_data():
         else:
             trend[k]["previous"] = "No previous record"
             trend[k]["difference"] = 0
+
+    trend_sorted = {
+        k: v
+        for k, v in sorted(
+            trend.items(), key=lambda item: item[1]["current"], reverse=True
+        )
+    }
 
     # Gaining crowd data
     gain_threshold = 5
@@ -161,7 +167,7 @@ def display_data():
                 "current": v["current"],
                 "previous": v["previous"],
             }
-            for k, v in trend.items()
+            for k, v in trend_sorted.items()
             if v["type"] == typ
         ]
         for typ in places_types

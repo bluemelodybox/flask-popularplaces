@@ -146,24 +146,28 @@ def display_data():
 
     # Line data
     time_range = [
-        "1hr 45mins ago",
-        "1hr 30mins ago",
-        "1hr 15mins ago",
-        "1hr ago",
-        "45 mins ago",
-        "30 mins ago",
-        "15 mins ago",
         "Current crowd",
+        "15 mins ago",
+        "30 mins ago",
+        "45 mins ago",
+        "1hr ago",
+        "1hr 15mins ago",
+        "1hr 30 mins ago",
+        "1hr 45mins ago",
     ]
 
     line_data = {
         typ: [
             {
                 "location": k,
-                "popularity": [
-                    {"popularity": hour, "time": t}
-                    for t, hour in zip(time_range, v["popularity"])
-                ],
+                "popularity": list(
+                    reversed(
+                        [
+                            {"popularity": hour, "time": t}
+                            for t, hour in zip(time_range, reversed(v["popularity"]))
+                        ]
+                    )
+                ),
                 "current": v["current"],
                 "previous": v["previous"],
             }

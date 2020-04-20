@@ -13,10 +13,13 @@ r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 API_KEY = os.environ["GOOGLE_API_KEY"]
 
 
-def normalize_size(current_pop, high_threshold):
-    if current_pop < high_threshold:
-        return 0
-    return (current_pop / 100) + 1
+def normalize_size(location, trend, high_threshold, gain_threshold):
+
+    if trend[location]["current"] > high_threshold:
+        return (trend[location]["current"] / 100) + 1
+    if trend[location]["difference"] > gain_threshold:
+        return (trend[location]["current"] / 100) + 1
+    return 0
 
 
 def get_color(location, trend, high_threshold, gain_threshold):
@@ -120,7 +123,7 @@ def display_data():
             "latitude": location["coordinates"]["lat"],
             "longitude": location["coordinates"]["lng"],
             "size": normalize_size(
-                location.get("current_popularity", 0), high_threshold
+                location["name"], trend, high_threshold, gain_threshold
             ),
             "color": get_color(location["name"], trend, high_threshold, gain_threshold),
         }

@@ -23,7 +23,7 @@ def get_color(location, trend, high_threshold, gain_threshold):
     if trend[location]["current"] >= high_threshold:
         return "#DC143C"  # High crowd area , return red color
     if trend[location]["difference"] >= gain_threshold:
-        return "#0088cc"
+        return "#FF7F50"  # Gaining crowd area, return orange color
     return "#E3E3E3"
 
 

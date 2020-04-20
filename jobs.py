@@ -40,7 +40,6 @@ def timed_job():
         "Mrt Station": [
             "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK Station
             "ChIJf9yot4cX2jERNWnz7pUJ0lM",  # AMK Station
-            "ChIJNTlhccg92jERBftThrByZK0",  # Pasir ris park
         ],
     }
 

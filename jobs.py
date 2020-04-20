@@ -81,7 +81,7 @@ def timed_job():
             "ChIJ4UnKpqYZ2jERhkj2F-wL-qI",  # Capitol Plaza
             "ChIJe3kMD5EZ2jERFGYVqhnc6DY",  # Cathay Cineleisure
             "ChIJ18C-mwoZ2jERlpSawcucgk0",  # Clark Quay Central
-            "ChIJRZ1c0JYZ2jER6cpyNpOyf3M",  # The Centrepoint
+            "ChIJRZ1c0JYZ2jER6cpyNpOyf3M",  # Centrepoint
             "ChIJZ1omp8gZ2jERgDUAb_hBKLY",  # City Square Mall
             "ChIJE6mq47MZ2jER_HX8IQ9k_dI",  # City Gate Mall
             "ChIJCeMaMKYZ2jER7P0rzkEtRbE",  # City Link Mall
@@ -137,7 +137,6 @@ def timed_job():
             "ChIJg0iEvagT2jERLpza72gaJ08",  # Causeway Point
             "ChIJLWB1kOcW2jERY7Rq2bBgbuo",  # Broadway Plaza
             "ChIJ_VQ0s-cW2jERd1Ub9pthffE",  # Jubilee Square
-            "ChIJb-ErmBYX2jERBl1gF7cPIj4",  # Junction 8
             "ChIJ9RT-5DYV2jERKbQXNwU4m6A",  # Northpoint City
             "ChIJ5-zrBoEU2jERhLnuZ0bgvUw",  # Sembawang Shopping Centre
             "ChIJAQAQzRQU2jERLmj7diPcCTI",  # Wisteria Mall
@@ -154,15 +153,54 @@ def timed_job():
             "ChIJg6GcaBcW2jER_Vyx8tDZ1JU",  # Rivervale Plaza
             "ChIJRwKG2mQW2jER13VL9P5QOws",  # Seletar Mall
             # North West
+            "ChIJ78vtZqkR2jERKX0SUR60iGA",  # Beauty World Plaza
+            "ChIJe3kTN6MR2jERr5FbmFCuxPI",  # Bukit Panjang Plaza
+            "ChIJ3f_4K_8R2jER2TvFneukn0s",  # Bukit Timah Plaza
+            "ChIJM7Kvx3QZ2jER7umUFjan98g",  # Fajar Shopping Centre
+            "ChIJ_8HAraQR2jERaLrfjzD5k7Y",  # Hillion Mall
+            "ChIJQSyjW7wR2jERvUB8B9ktx20",  # Junction 10
+            "ChIJSZQvzO8R2jER3y3YPr6U1bQ",  # Limbang Shopping Centre
+            "ChIJs5CBlukR2jER-uyFhQ2NFbU",  # Lot One Shoppers Mall
+            "ChIJSX0T2lMQ2jERa6Ixq0d5hkA",  # The Rail Mail
+            "ChIJ83fjadsR2jERGC3nsNM2g7s",  # Sunshine Place
+            "ChIJU5KbYb8R2jERt0l-XxTMFgI",  # Tech Whye Shopping Centre
+            "ChIJxzbY1z4Q2jER7drH__TXbOI",  # West Mall
+            "ChIJL3h_-fMR2jERaA6mW3u-wNU",  # YewTee Point
+            # South
+            "ChIJM9EuaOIb2jERA_WsaQ7eLkE",  # Harbourfront Centre
+            "ChIJwz3yHMEb2jERHclcbs5KL4A",  # Alexandra Retail Centre
             "ChIJK7xLl1gZ2jERP_GdUY9XNLo",  # Vivo City
-            "ChIJa9YM2-wP2jERmOUStQKyiS0",  # Jurong Point
+            # West
+            "ChIJi1x76o0a2jERRpEEL3FuXJk",  # 321 Clementi
+            "ChIJq8UGJo4a2jER0ypiQDLiXpg",  # The Clementi Mall
             "ChIJa2nb2g0Q2jERlcUMLtMVyoI",  # IMM
-            # "ChIJx4wPggYZ2jERnT8vOV1XU5k",  # The shoppers at MBS (No data)
-            # "ChIJxyqHo7oZ2jERNQtDRIuckqU",  # Bugis Junction
+            "ChIJh7rQjgUQ2jERSAcxrKMcMg0",  # Jcube
+            "ChIJ82AoVA8Q2jERkHnr1RPW9B4",  # Westgate
+            "ChIJa9YM2-wP2jERmOUStQKyiS0",  # Jurong Point
+            "ChIJ67mVKpcP2jERmahUvC-ZIwc",  # Pioneer Mall
+            "ChIJ91hVlEIa2jERm_cxYZ2WKow",  # The star vista
+            "ChIJe5qyMnkZ2jERYRN7QP_pCMQ",  # Tiong Bahru Plaza
+            "ChIJ_1WtiMwb2jERZKYs6ALsFxc",  # Alexandra Central Mall
+            "ChIJVXvuuswb2jER8BZU_kcS2ds",  # Anchorpoint Shopping Centre
+            "ChIJgz0VpRYX2jER-1qtnt9Cxdc",  # Fairprice Hub
+            "ChIJ58WuUbwP2jERmHrSoc33hp4",  # Gek Poh Shopping Centre
+            "ChIJEaBAGEMa2jERttBFiHpl_UE",  # Rochester Mall
+            "ChIJDVS-D_sP2jERQRJHuRjWdpQ",  # Taman Jurong Shopping Centre
+            "ChIJdxS7gPEa2jER1iMe8Ai90Ts",  # West Coast Plaza
+            "ChIJpeuce8sb2jERad66-Hwmus8",  # Queensway Shopping Centre
         ],
         "Mrt Station": [
             # Red Line
+            "ChIJL52pCg8Q2jERgiWsODe3X9I",  # Jurong East
+            "ChIJmYDhHjYQ2jERn_eQZlaFlkw",  # Bukit Gombak
             "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK
+            "ChIJg9zFkjAR2jERXmWQPEs55Kg",  # Yew Tee
+            "ChIJOfqWIFMS2jERa9KO1y1xmCM",  # Marsiling
+            "ChIJYx1I6qgT2jERIxNhwuTCugQ",  # Woodlands
+            "ChIJ9dSHDHUT2jER2OAwCRnDDKk",  # Admiralty
+            "ChIJs-mIfYQU2jERIv9P7DRoqto",  # Canberra
+            "ChIJrxLCiA0U2jER-R_D8ehBje4",  # Khatib
+            "ChIJn0tVp-oW2jERdiqBIe4em60",  # Yio Chu Kang
             "ChIJn0ZzleYW2jERBt5hM27FAkw",  # AMK
             # Green Line
             "ChIJQ2MJTysa2jERGZ-q0JXY0qg",  # Rehill
@@ -186,6 +224,9 @@ def timed_job():
             places_data = populartimes.get_id(API_KEY, p)
             places_data["created_time"] = creation_time
             places_data["type"] = key
+            if key == "Mrt Station" and "MRT" not in places_data["name"]:
+                places_data["name"] += " MRT"
+
             res.append(places_data)
     r.setex(name=creation_time, time=timedelta(hours=2), value=json.dumps(res))
     return "success"

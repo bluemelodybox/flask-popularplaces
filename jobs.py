@@ -110,9 +110,50 @@ def timed_job():
             "ChIJO_5acOcZ2jERMTtjb_W_6Go",  # Velocity
             "ChIJmbzds40Z2jERALKuryaSSVI",  # Wisma
             "ChIJZdlKPGAX2jERZlOP1cN5tpE",  # Zhongshan Mall
-
-            # "ChIJl_sOMpIZ2jERKgmuCf4FCs0",  # Paragon Shopping Centre
+            # East
+            "ChIJQyaM-6892jER4DhQn_hqaYE",  # White sands
+            "ChIJHeeu2LU92jER7QLDVe4tKf0",  # Downtown East
+            "ChIJCXOkiBE92jERm5iCnMRS4_g",  # Century Square
+            "ChIJTVVVIA492jER3TWGPpL6gRk",  # Tampines 1
+            "ChIJ89lf6hE92jERQXt7c5QOFnY",  # Tampines Mall
+            "ChIJu487hQ092jER1DJRGc0isoE",  # Our Tampines Hub
+            "ChIJ483Qk9YX2jERA0VOQV7d1tY",  # Changi Airport
+            "ChIJ7egDUyI92jERegSiojEDekc",  # Eastpoint Mall
+            "ChIJR80Wwcoi2jER8yMuAZodQFk",  # Bedok Mall
+            "ChIJgWBomLQi2jERyU-GZEHw_NI",  # Bedok Point
+            "ChIJzxwZERgY2jER2FX37qmG49Q",  # Paya Lebar Square
+            "ChIJC8ructcZ2jER2WPSgnCqzoc",  # SingPost Centre
+            "ChIJpYsWrRcY2jERBZAPQskkaAw",  # City plaza
+            "ChIJR9HlRHIY2jER9RAgYi5Pqbs",  # Katong Square
+            "ChIJC3pECnIY2jERnT-FiMVHPIk",  # Katong V
+            "ChIJjQcl90sY2jER0d9ui1pFp9s",  # Kallang Wave Mall
+            "ChIJLd1Z2E4Y2jERUHJ7xqnUnoI",  # Leisure Park Kallang
+            "ChIJO78EpL492jERuWZcaOf26DA",  # Elias Mall
+            "ChIJxzqK6cg92jERB-QagzzIEzs",  # Loyang Point
+            "ChIJw3l-FL4X2jERw2pScvHQCbg",  # Jewel Changi Airport
+            # North
+            "ChIJIf-M9qAT2jERd0qCLuYmM3E",  # 888 Plaza
+            "ChIJT80kwuYW2jERhogn4ZW0fG4",  # AMK Hub
+            "ChIJg0iEvagT2jERLpza72gaJ08",  # Causeway Point
+            "ChIJLWB1kOcW2jERY7Rq2bBgbuo",  # Broadway Plaza
+            "ChIJ_VQ0s-cW2jERd1Ub9pthffE",  # Jubilee Square
+            "ChIJb-ErmBYX2jERBl1gF7cPIj4",  # Junction 8
+            "ChIJ9RT-5DYV2jERKbQXNwU4m6A",  # Northpoint City
+            "ChIJ5-zrBoEU2jERhLnuZ0bgvUw",  # Sembawang Shopping Centre
+            "ChIJAQAQzRQU2jERLmj7diPcCTI",  # Wisteria Mall
+            # North East
+            "ChIJLTCPpuQV2jERYMYF_2uprDE",  # Waterway Point
+            "ChIJy5hMcg8X2jERZ88iA4l4aBY",  # Compass One
+            "ChIJTzOjnDcW2jERHyoyj5LFmQ4",  # Hougang Mall
+            "ChIJ1V9s-bMX2jERQL59mMdHw7I",  # Heartland mall
             "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex Shopping Mall
+            "ChIJ1-hkimEW2jERyc5cKHfC3Sw",  # Greenwich V
+            "ChIJ0ZkQLVsW2jERY9DgZurtpl8",  # Hougang 1
+            "ChIJpwNkYAIW2jERFRkVIyvEAao",  # Punggol Plaza
+            "ChIJmQIrNAUW2jER6VgPAnslDhU",  # Rivervale Mall
+            "ChIJg6GcaBcW2jER_Vyx8tDZ1JU",  # Rivervale Plaza
+            "ChIJRwKG2mQW2jER13VL9P5QOws",  # Seletar Mall
+            # North West
             "ChIJK7xLl1gZ2jERP_GdUY9XNLo",  # Vivo City
             "ChIJa9YM2-wP2jERmOUStQKyiS0",  # Jurong Point
             "ChIJa2nb2g0Q2jERlcUMLtMVyoI",  # IMM

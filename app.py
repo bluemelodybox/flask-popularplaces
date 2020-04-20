@@ -20,9 +20,9 @@ def normalize_size(current_pop, high_threshold):
 
 
 def get_color(location, trend, high_threshold, gain_threshold):
-    if trend[location]["current"] >= high_threshold:
+    if trend[location]["current"] > high_threshold:
         return "#DC143C"  # High crowd area , return red color
-    if trend[location]["difference"] >= gain_threshold:
+    if trend[location]["difference"] > gain_threshold:
         return "#FF7F50"  # Gaining crowd area, return orange color
     return "#E3E3E3"
 
@@ -108,7 +108,7 @@ def display_data():
     gaining_crowd_places = [
         val["type"]
         for location, val in trend.items()
-        if val["difference"] >= gain_threshold
+        if val["difference"] > gain_threshold
     ]
     gaining_crowd = {t: gaining_crowd_places.count(t) for t in places_types}
     gaining_crowd["Total"] = len(gaining_crowd_places)

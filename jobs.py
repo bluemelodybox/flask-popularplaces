@@ -17,6 +17,7 @@ def timed_job():
 
     places = {
         "Park": [
+            "ChIJMxZ-kwQZ2jERdsqftXeWCWI",  # Gardens by the Bay
             "ChIJ0QX_Brki2jER-pZKNdqk_a8",  # East Coast Park
             "ChIJQ8uk4vwa2jERqMrT6OFBMuw",  # West Coast Park
             "ChIJjyjjwCAX2jERxYHvTxAw4X0",  # Bishan AMK Park

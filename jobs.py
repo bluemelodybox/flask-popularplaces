@@ -39,7 +39,7 @@ def timed_job():
         ],
         "Mrt Station": [
             "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK Station
-            "ChIJf9yot4cX2jERNWnz7pUJ0lM",  # AMK Station
+            "ChIJn0ZzleYW2jERBt5hM27FAkw",  # AMK Station
         ],
     }
 

@@ -30,6 +30,24 @@ def timed_job():
             "ChIJUzbaYws82jERXHKMRlUKIug",  # Changi Beach Park
             "ChIJNRelbgMT2jERD6Ak-zoK23U",  # Admirality Park
             "ChIJVSYjJKIZ2jERpRFinATD52s",  # Fort Canning Park
+            "ChIJIdel7DsW2jERWep5ioblaeg",  # Punggol Park
+            "ChIJJ9TgVLwU2jERIYaBgBL-vn0",  # Sembawang Park
+            "ChIJf7-nelA92jERV0jVMjWeteQ",  # Bedok Town Park
+            "ChIJBVVBo_EV2jER-jKR3Hy6qUk",  # Punggol Waterway Park
+            "ChIJn_BWwVUS2jERyHkVTD_-_vw",  # Marsiling Park
+            "ChIJi090zPwS2jERiJCqFWoP8Z4",  # Woodlands Waterfront Park
+            "ChIJQ6n9Ygw92jERM5o8IkMEhyU",  # Sun Plaza Park
+            "ChIJq_5RjPUQ2jERQZR7bzih7tw",  # Hindhede Nature Park
+            "ChIJqVUlbe0P2jER-8gqnsq4eNk",  # Jurong Central Park
+            "ChIJD_tH7GIU2jERYpWt_zq8Adw",  # Yishun Neighbourhood Park
+            "ChIJRzglD-wR2jERgCmyEeAecXI",  # Choa Chu Kang Park
+            "ChIJ59JC2zAR2jERBRxd5jtZKL8",  # Upper Peirce Reservior Park
+            "ChIJJeg_k0oY2jER3tyt8xkYb9M",  # Kallang Riverside Park
+            "ChIJQ86JKWEX2jERaRixYj7hl_U",  # Toa Payoh Town Park
+            "ChIJ____rBoU2jERyE5AP5-iwrc",  # Lower Seletar Reservoir Park
+            "ChIJbV8dJE8b2jERF_R5y03Hiv4",  # National Orchid Garden
+            "ChIJpwd8kn8Z2jERptmG8rTWrsI",  # Tiong Bahru Park
+            "ChIJC_hOgcgb2jERfF9HNB10xfI",  # Hort Park
         ],
         "Market": [
             # Hawker
@@ -54,33 +72,69 @@ def timed_job():
             "ChIJk_idN3oU2jEReqhHxnv3lgI",  # Chong Pang Market
         ],
         "Shopping Mall": [
-            "ChIJl_sOMpIZ2jERKgmuCf4FCs0",  # Paragon Shopping Centre
-            "ChIJ20X__K4Z2jERRE8GRs-d8HE",  # Suntec City
-            "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex Shopping Mall
-            "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # ION orchard
-            "ChIJK7xLl1gZ2jERP_GdUY9XNLo",  # Vivo City
+            # Central
+            "ChIJvUUHX2sZ2jERFw3Rybv_wwY",  # 100 AM
+            "ChIJHSrGJ5EZ2jERTzbUyme7KuQ",  # 313 @ Somerset
+            "ChIJFx0yu8sZ2jERgoVtEwS7Igs",  # Aperial Hotel
+            "ChIJe5TGTaUZ2jERK_5_SabSeuk",  # Bugis Cube
+            "ChIJwSNJ77oZ2jERuX8Bl5bU2tI",  # Bugis +
+            "ChIJ4UnKpqYZ2jERhkj2F-wL-qI",  # Capitol Plaza
+            "ChIJe3kMD5EZ2jERFGYVqhnc6DY",  # Cathay Cineleisure
+            "ChIJ18C-mwoZ2jERlpSawcucgk0",  # Clark Quay Central
+            "ChIJRZ1c0JYZ2jER6cpyNpOyf3M",  # The Centrepoint
             "ChIJZ1omp8gZ2jERgDUAb_hBKLY",  # City Square Mall
-            "ChIJa9YM2-wP2jERmOUStQKyiS0",  # Jurong Point
-            "ChIJ_7pt85EZ2jERPfKpmuwrzys",  # Ngee Ann City
-            "ChIJa2nb2g0Q2jERlcUMLtMVyoI",  # IMM
-            "ChIJx4wPggYZ2jERnT8vOV1XU5k",  # The shoppers at MBS
+            "ChIJE6mq47MZ2jER_HX8IQ9k_dI",  # City Gate Mall
+            "ChIJCeMaMKYZ2jER7P0rzkEtRbE",  # City Link Mall
+            "ChIJoXpYbrAZ2jER5klV-uEO2xk",  # DUO Galleria
+            "ChIJPZTUpZIZ2jERk5GUzK_g9_0",  # Far East Plaza
+            "ChIJqz4D-d8Z2jERj4HjyaJtGvI",  # Funan Mall
+            "ChIJqz4D-d8Z2jERj4HjyaJtGvI",  # Great World City
+            "ChIJMcwh6o0Z2jERNxsLqnSIvlw",  # ION orchard
+            "ChIJb-ErmBYX2jERBl1gF7cPIj4",  # Junction 8
+            "ChIJ3SrTf58Z2jER8DY5cemLKM8",  # Liang Court
+            "ChIJ6xFibZIZ2jERlMTu3Bo6a9c",  # Lucky Plaza
+            "ChIJHXaCig4Z2jER6U4Qy8aX7Co",  # Marina Bay Link Mall
             "ChIJb0Ex86gZ2jERediPOjPxqJo",  # Marina Square
+            "ChIJo_z7IqkZ2jERE1tkSZmYR8o",  # Millenia Walk
+            "ChIJP7z00McZ2jERJztQqXkRIC4",  # Mustafa Centre
+            "ChIJ_7pt85EZ2jERPfKpmuwrzys",  # Ngee Ann City
+            "ChIJQfAL2JYZ2jER9v06BxkNw1k",  # Orchard Central
             "ChIJR1Fyfr0Z2jERzwO-AZiJ-HM",  # Plaza Singapura
-            "ChIJxyqHo7oZ2jERNQtDRIuckqU",  # Bugis Junction
+            "ChIJl6MA_AMZ2jERWANMx2T6CTk",  # Raffles City Shopping Centre
+            "ChIJB5c91rsZ2jERPX9_QUwrSsc",  # Sim Lim Square
+            "ChIJoavrZ-cZ2jEROHbTzqYlVM4",  # Square 2
+            "ChIJ20X__K4Z2jERRE8GRs-d8HE",  # Suntec City
+            "ChIJmXU4W4oZ2jERDul4uxP0pYc",  # Tanglin Mall
+            "ChIJbV9Xho0Z2jERrixofz0u32Q",  # Tangs
+            "ChIJRX3v4ecZ2jERD0BlqjhXKCc",  # United Square Shopping Mall
+            "ChIJO_5acOcZ2jERMTtjb_W_6Go",  # Velocity
+            "ChIJmbzds40Z2jERALKuryaSSVI",  # Wisma
+            "ChIJZdlKPGAX2jERZlOP1cN5tpE",  # Zhongshan Mall
+
+            # "ChIJl_sOMpIZ2jERKgmuCf4FCs0",  # Paragon Shopping Centre
+            "ChIJeRqAraYX2jERQpyIAXSU1SU",  # Nex Shopping Mall
+            "ChIJK7xLl1gZ2jERP_GdUY9XNLo",  # Vivo City
+            "ChIJa9YM2-wP2jERmOUStQKyiS0",  # Jurong Point
+            "ChIJa2nb2g0Q2jERlcUMLtMVyoI",  # IMM
+            # "ChIJx4wPggYZ2jERnT8vOV1XU5k",  # The shoppers at MBS (No data)
+            # "ChIJxyqHo7oZ2jERNQtDRIuckqU",  # Bugis Junction
         ],
         "Mrt Station": [
-            # Red
+            # Red Line
             "ChIJCZRupukR2jERCglyJsNXaHE",  # CCK
             "ChIJn0ZzleYW2jERBt5hM27FAkw",  # AMK
-            # Green
+            # Green Line
             "ChIJQ2MJTysa2jERGZ-q0JXY0qg",  # Rehill
             "ChIJU1XTRiI92jERegtsZETZgPU",  # Simei
             "ChIJ8RPWtkE92jERA2c5rW_gvkQ",  # Tanah Merah
             "ChIJ9Qq5NwcY2jERMkhHdGleiKk",  # Kembangan
-            "ChIJA08Q0gQY2jERrq60-mOgmxQ",  # Eunos
+            # "ChIJA08Q0gQY2jERrq60-mOgmxQ",  # Eunos
             "ChIJU-xrGhgY2jERLX7VN6dXpsA",  # Paya Lebar
             "ChIJ580nZDQY2jERNmMG5GQHQMI",  # Kallang
             "ChIJR_ZtkaYZ2jERV9J2Cytl6ZM",  # City Hall
+            # Purple Line
+            # Circle Line
+            # Downtown Line
         ],
     }
 

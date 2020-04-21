@@ -30,6 +30,20 @@ def get_color(location, trend, high_threshold, gain_threshold):
     return "#E3E3E3"
 
 
+def get_usual_data(poptimes, created_time):
+    if poptimes:
+        return poptimes[datetime.fromtimestamp(created_time).weekday()]["data"][
+            datetime.fromtimestamp(created_time).hour
+        ]
+    return 0
+
+
+def get_crowd_ratio(current, usual):
+    if usual:
+        return int(current / usual * 100)
+    return 0
+
+
 @app.route("/")
 def index():
     return "<h1>Popularplaces API<h1>"
@@ -80,6 +94,9 @@ def display_data():
             "popularity": [],
             "type": location["type"],
             "current": location.get("current_popularity", 0),
+            "usual": get_usual_data(
+                location.get("populartimes", []), location["created_time"]
+            ),
         }
         for location in latest_data
     }
@@ -141,6 +158,8 @@ def display_data():
         {
             "Location": k,
             "Current crowd": v["current"],
+            "Usual crowd": v["usual"],
+            "Crowd ratio": get_crowd_ratio(v["current"], v["usual"]),
             "Crowd changes": v["difference"],
             "Type": shorten_type[v["type"]],
         }

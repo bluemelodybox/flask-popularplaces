@@ -65,7 +65,7 @@ def display_data():
     places_covered["Total"] = len(total_places_covered)
 
     # High crowd data
-    high_threshold = 30
+    high_threshold = 50
     high_crowd_places = [
         location["type"]
         for location in latest_data
@@ -107,7 +107,7 @@ def display_data():
     }
 
     # Gaining crowd data
-    gain_threshold = 5
+    gain_threshold = 10
     gaining_crowd_places = [
         val["type"]
         for location, val in trend.items()

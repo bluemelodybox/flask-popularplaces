@@ -9,36 +9,24 @@ import redis
 
 app = Flask(__name__)
 url = urlparse(os.environ.get("REDISCLOUD_URL"))
-r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
-API_KEY = os.environ["GOOGLE_API_KEY"]
+r = redis.StrictRedis(
+    host=url.hostname,
+    port=url.port,
+    password=url.password,
+    charset="utf-8",
+    decode_responses=True,
+)
 
 
-def normalize_size(location, trend, high_threshold, gain_threshold):
-
-    if trend[location]["current"] > high_threshold:
-        return (trend[location]["current"] / 100) + 1
-    if trend[location]["difference"] > gain_threshold:
-        return (trend[location]["current"] / 100) + 1
+def get_usual(redis_data, place, created_time):
+    if redis_data[place]["popular_times"]:
+        return redis_data[place]["popular_times"][
+            datetime.fromtimestamp(created_time).weekday()
+        ]["data"][datetime.fromtimestamp(created_time).hour]
     return 0
 
 
-def get_color(location, trend, high_threshold, gain_threshold):
-    if trend[location]["current"] > high_threshold:
-        return "#DC143C"  # High crowd area , return red color
-    if trend[location]["difference"] > gain_threshold:
-        return "#FF7F50"  # Gaining crowd area, return orange color
-    return "#E3E3E3"
-
-
-def get_usual_data(poptimes, created_time):
-    if poptimes:
-        return poptimes[datetime.fromtimestamp(created_time).weekday()]["data"][
-            datetime.fromtimestamp(created_time).hour
-        ]
-    return 0
-
-
-def get_crowd_ratio(current, usual):
+def get_ratio(current, usual):
     if usual:
         return int(current / usual * 100)
     return 0
@@ -51,156 +39,125 @@ def index():
 
 @app.route("/raw/")
 def raw_data():
-    keys = [int(k.decode("utf-8")) for k in r.scan_iter()]
-    keys.sort()  # Earliest date first
-    data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
-    return jsonify(data)
+    last_updated = int(r.get("last_updated"))
+    data = json.loads(r.get("data"))
+    return jsonify({"data": data, "last_updated": last_updated})
 
 
 # Display data collected
 @app.route("/data/")
 def display_data():
 
-    keys = [int(k.decode("utf-8")) for k in r.scan_iter()]
-    keys.sort()  # Earliest date first
-    data = [json.loads(r.get(str(k)).decode("utf-8")) for k in keys]
-
-    latest_data = data[-1]  # latest data
-    places_types = [
-        "Park",
-        "Market",
-        "Shopping Mall",
-        "Mrt Station",
-    ]  # different places types
+    last_updated = int(r.get("last_updated"))
+    redis_data = json.loads(r.get("data"))
+    with open("places.json", "r") as f:
+        places = json.load(f)
 
     # Places covered data
-    total_places_covered = [location["type"] for location in latest_data]
-    places_covered = {t: total_places_covered.count(t) for t in places_types}
-    places_covered["Total"] = len(total_places_covered)
+    places_covered = {k: len(places[k]) for k in places}
+    places_covered["total"] = sum(places_covered.values())
 
     # High crowd data
-    high_threshold = 50
-    high_crowd_places = [
-        location["type"]
-        for location in latest_data
-        if location.get("current_popularity", 0) > high_threshold
-    ]
-    high_crowd = {t: high_crowd_places.count(t) for t in places_types}
-    high_crowd["Total"] = len(high_crowd_places)
+    high_threshold = 10
+    high_crowd = {k: 0 for k in places}
+    for place_type in places:
+        for place in places[place_type]:
+            if redis_data[place]["current_popularity"][-1] > high_threshold:
+                high_crowd[place_type] += 1
+                redis_data[place]["size"] = (
+                    redis_data[place]["current_popularity"][-1] / 100
+                ) + 1
+                redis_data[place]["color"] = "#DC143C"
 
-    # Initialize required data for gaining crowd and line data
-    trend = {
-        location["name"]: {
-            "popularity": [],
-            "type": location["type"],
-            "current": location.get("current_popularity", 0),
-            "usual": get_usual_data(
-                location.get("populartimes", []), location["created_time"]
-            ),
-        }
-        for location in latest_data
-    }
-
-    for t in data:
-        for location in t:
-            if trend.get(location["name"]) != None:
-                trend[location["name"]]["popularity"].append(
-                    location.get("current_popularity", 0)
-                )
-
-    for k, v in trend.items():
-        if len(v["popularity"]) > 1:
-            trend[k]["previous"] = v["popularity"][-2]
-            trend[k]["difference"] = trend[k]["current"] - trend[k]["previous"]
-        else:
-            trend[k]["previous"] = "No previous record"
-            trend[k]["difference"] = 0
-
-    trend_sorted = {
-        k: v
-        for k, v in sorted(
-            trend.items(), key=lambda item: item[1]["current"], reverse=True
-        )
-    }
+    high_crowd["total"] = sum(high_crowd.values())
 
     # Gaining crowd data
-    gain_threshold = 10
-    gaining_crowd_places = [
-        val["type"]
-        for location, val in trend.items()
-        if val["difference"] > gain_threshold
-    ]
-    gaining_crowd = {t: gaining_crowd_places.count(t) for t in places_types}
-    gaining_crowd["Total"] = len(gaining_crowd_places)
+    gaining_threshold = 5
+    gaining_crowd = {k: 0 for k in places}
+    for place_type in places:
+        for place in places[place_type]:
+            if (
+                redis_data[place]["current_popularity"][-1]
+                - redis_data[place]["current_popularity"][-2]
+                > gaining_threshold
+            ):
+                gaining_crowd[place_type] += 1
+                if not redis_data[place].get("color"):
+                    redis_data[place]["size"] = (
+                        redis_data[place]["current_popularity"][-1] / 100
+                    ) + 1
+                    redis_data[place]["color"] = "#FF7F50"
+
+    gaining_crowd["total"] = sum(gaining_crowd.values())
 
     # Map data
-    map_data = [
-        {
-            "title": location["name"],
-            "latitude": location["coordinates"]["lat"],
-            "longitude": location["coordinates"]["lng"],
-            "size": normalize_size(
-                location["name"], trend, high_threshold, gain_threshold
-            ),
-            "color": get_color(location["name"], trend, high_threshold, gain_threshold),
-        }
-        for location in latest_data
-    ]
+    map_data = []
+    for place_type in places:
+        for place in places[place_type]:
+            map_data.append(
+                {
+                    "place": place,
+                    "latitude": places[place_type][place][0],
+                    "longitude": places[place_type][place][1],
+                    "size": redis_data[place].get("size", 0),
+                    "color": redis_data[place].get("color", "#E3E3E3"),
+                }
+            )
 
     # Table data
-    shorten_type = {
-        "Park": "Park",
-        "Shopping Mall": "Mall",
-        "Mrt Station": "Mrt",
-        "Market": "Market",
-    }
-    table_data = [
-        {
-            "Location": k,
-            "Current crowd": v["current"],
-            "Usual crowd": v["usual"],
-            "Crowd ratio": get_crowd_ratio(v["current"], v["usual"]),
-            "Crowd changes": v["difference"],
-            "Type": shorten_type[v["type"]],
-        }
-        for k, v in trend.items()
-    ]
+    table_data = []
+    for place_type in places:
+        for place in places[place_type]:
+            usual = get_usual(redis_data, place, last_updated)
+            current = redis_data[place]["current_popularity"][-1]
+            table_data.append(
+                {
+                    "place": place,
+                    "current": current,
+                    "usual": usual,
+                    "ratio": get_ratio(current, usual),
+                    "changes": current - redis_data[place]["current_popularity"][-2],
+                    "type": place_type.capitalize(),
+                }
+            )
 
     # Line data
     time_range = [
-        "Current crowd",
-        "15 mins ago",
-        "30 mins ago",
-        "45 mins ago",
-        "1hr ago",
-        "1hr 15mins ago",
-        "1hr 30 mins ago",
+        "2hrs ago",
         "1hr 45mins ago",
+        "1hr 30mins ago",
+        "1hr 15 mins ago",
+        "1hr ago",
+        "45 mins ago",
+        "30 mins ago",
+        "15 mins ago",
+        "Current crowd",
     ]
-
-    line_data = {
-        typ: [
-            {
-                "location": k,
-                "popularity": list(
-                    reversed(
-                        [
-                            {"popularity": hour, "time": t}
-                            for t, hour in zip(time_range, reversed(v["popularity"]))
-                        ]
-                    )
-                ),
-                "current": v["current"],
-                "previous": v["previous"],
-            }
-            for k, v in trend_sorted.items()
-            if v["type"] == typ
-        ]
-        for typ in places_types
-    }
+    line_data = {k: [] for k in places}
+    for place_type in places:
+        for place in places[place_type]:
+            line_data[place_type].append(
+                {
+                    "place": place,
+                    "popularity": [
+                        {"popularity": pop, "time": t}
+                        for pop, t in zip(
+                            redis_data[place]["current_popularity"], time_range
+                        )
+                    ],
+                    "current": redis_data[place]["current_popularity"][-1],
+                    "previous": redis_data[place]["current_popularity"][-2],
+                }
+            )
+    for place_type in line_data:
+        line_data[place_type] = sorted(
+            line_data[place_type],
+            key=lambda k: k["popularity"][-1]["popularity"],
+            reverse=True,
+        )
 
     final = {
-        "lastUpdatedTime": datetime.fromtimestamp(keys[-1]),
+        "lastUpdatedTime": datetime.fromtimestamp(last_updated),
         "placesCovered": places_covered,
         "highCrowd": high_crowd,
         "gainingCrowd": gaining_crowd,

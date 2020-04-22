@@ -1,0 +1,15 @@
+{
+  "mrt": {
+    "Admiralty Station": [1.440689, 103.800933],
+    "Aljunied Station": [1.316442, 103.882981]
+  },
+  "mall": {
+    "Nex": [1.369639, 103.8485]
+  },
+  "park": {
+    "Bishan-Ang Mo Kio Park": [1.366667, 103.833333]
+  },
+  "market": {
+    "Newton Food Centre": [1.311944, 103.839444]
+  }
+}

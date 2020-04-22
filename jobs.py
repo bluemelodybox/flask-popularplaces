@@ -170,7 +170,10 @@ def timed_job():
         current_pop, pop_times = get_pop_times(k)
         current_popularity.remove(current_popularity[0])
         current_popularity.append(current_pop)
-        redis_data[k]["popular_times"] = get_popularity_for_day(pop_times)
+        if pop_times:
+            redis_data[k]["popular_times"] = get_popularity_for_day(pop_times)
+        else:
+            redis_data[k]["popular_times"] = []
     r.set(name="data", value=json.dumps(redis_data))
     creation_time = int(time())
     r.set(name="last_updated", value=creation_time)

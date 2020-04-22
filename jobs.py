@@ -139,7 +139,7 @@ def timed_job():
 
     # Connect to rediscloud
     url = urlparse(os.environ.get("REDISCLOUD_URL"))
-    r = redis.Strict(
+    r = redis.StrictRedis(
         host=url.hostname,
         port=url.port,
         password=url.password,

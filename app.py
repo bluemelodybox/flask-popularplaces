@@ -1,6 +1,5 @@
 # app.py
 from flask import Flask, jsonify
-import populartimes
 import os, json
 from time import time
 from datetime import timedelta, datetime

@@ -57,7 +57,7 @@ def display_data():
     places_covered["total"] = sum(places_covered.values())
 
     # High crowd data
-    high_threshold = 10
+    high_threshold = 50
     high_crowd = {k: 0 for k in places}
     for place_type in places:
         for place in places[place_type]:
@@ -71,7 +71,7 @@ def display_data():
     high_crowd["total"] = sum(high_crowd.values())
 
     # Gaining crowd data
-    gaining_threshold = 5
+    gaining_threshold = 10
     gaining_crowd = {k: 0 for k in places}
     for place_type in places:
         for place in places[place_type]:

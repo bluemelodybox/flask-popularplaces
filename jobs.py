@@ -136,7 +136,7 @@ def get_popularity_for_day(popularity):
 
 @sched.scheduled_job("interval", minutes=15)
 def timed_job():
-    start = int(time())
+    start = time()
     # Connect to rediscloud
     url = urlparse(os.environ.get("REDISCLOUD_URL"))
     r = redis.StrictRedis(
@@ -177,8 +177,8 @@ def timed_job():
     r.set(name="data", value=json.dumps(redis_data))
     creation_time = int(time())
     r.set(name="last_updated", value=creation_time)
-    time_taken = int(time()) - start
-    r.set(name="time_taken", value=time_taken)
+    time_taken = time() - start
+    r.set(name="time_taken", value=str(time_taken))
 
 
 sched.start()

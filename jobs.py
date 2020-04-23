@@ -153,8 +153,6 @@ def timed_job():
 
     for k in redis_data:
         current_popularity = redis_data[k]["current_popularity"]
-
-    for k in redis_data:
         if address.get(k):
             new_k = k + ", " + address[k]
         else:

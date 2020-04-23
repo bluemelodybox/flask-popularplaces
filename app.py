@@ -69,7 +69,7 @@ def display_data():
         places = json.load(f)
 
     for d in places:
-        for p in places[d].keys():
+        for p in list(places[d]):
             if p not in redis_data.keys():
                 del places[d][p]
 

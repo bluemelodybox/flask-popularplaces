@@ -96,7 +96,6 @@ def get_popularity_for_day(popularity):
 
     # Initialize empty matrix with 0s
     pop_json = [[0 for _ in range(24)] for _ in range(7)]
-    wait_json = [[0 for _ in range(24)] for _ in range(7)]
 
     for day in popularity:
 
@@ -107,21 +106,6 @@ def get_popularity_for_day(popularity):
 
                 hour = hour_info[0]
                 pop_json[day_no - 1][hour] = hour_info[1]
-
-                # check if the waiting string is available and convert no minutes
-                if len(hour_info) > 5:
-                    wait_digits = re.findall(r"\d+", hour_info[3])
-
-                    if len(wait_digits) == 0:
-                        wait_json[day_no - 1][hour] = 0
-                    elif "min" in hour_info[3]:
-                        wait_json[day_no - 1][hour] = int(wait_digits[0])
-                    elif "hour" in hour_info[3]:
-                        wait_json[day_no - 1][hour] = int(wait_digits[0]) * 60
-                    else:
-                        wait_json[day_no - 1][hour] = int(wait_digits[0]) * 60 + int(
-                            wait_digits[1]
-                        )
 
                 # day wrap
                 if hour_info[0] == 23:

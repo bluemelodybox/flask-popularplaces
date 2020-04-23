@@ -49,12 +49,13 @@ def raw_data():
     data = {k: dict() for k in places_set & redis_data.keys()}
     for t in places:
         for p in places[t]:
-            data[p]["type"] = t
-            data[p]["location"] = places[t][p]
-            data[p]["usual_crowd"] = get_usual(redis_data, p, last_updated)
-            data[p]["current_crowd"] = redis_data[p]["current_popularity"][-1]
-            data[p]["crowd_data"] = redis_data[p]["current_popularity"]
-            data[p]["popular_times"] = redis_data[p]["popular_times"]
+            if p in data:
+                data[p]["type"] = t
+                data[p]["location"] = places[t][p]
+                data[p]["usual_crowd"] = get_usual(redis_data, p, last_updated)
+                data[p]["current_crowd"] = redis_data[p]["current_popularity"][-1]
+                data[p]["crowd_data"] = redis_data[p]["current_popularity"]
+                data[p]["popular_times"] = redis_data[p]["popular_times"]
     return jsonify({"data": data, "last_updated": last_updated})
 
 
@@ -68,7 +69,7 @@ def display_data():
         places = json.load(f)
 
     for d in places:
-        for p in places[d]:
+        for p in places[d].keys():
             if p not in redis_data.keys():
                 del places[d][p]
 

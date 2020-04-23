@@ -133,8 +133,10 @@ def timed_job():
     redis_data = json.loads(r.get("data"))
 
     # Get all places from json
-    with open("places.json") as f:
+    with open("places.json", "r") as f:
         places = json.load(f)
+    with open("address.json", "r") as f:
+        address = json.load(f)
     places_set = set()
     for place_type in places:
         for place in places[place_type]:
@@ -151,7 +153,13 @@ def timed_job():
 
     for k in redis_data:
         current_popularity = redis_data[k]["current_popularity"]
-        current_pop, pop_times = get_pop_times(k)
+
+    for k in redis_data:
+        if address.get(k):
+            new_k = k + ", " + address[k]
+        else:
+            new_k = k
+        current_pop, pop_times = get_pop_times(new_k)
         current_popularity.remove(current_popularity[0])
         current_popularity.append(current_pop)
         if pop_times:

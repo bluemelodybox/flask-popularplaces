@@ -67,6 +67,11 @@ def display_data():
     with open("places.json", "r") as f:
         places = json.load(f)
 
+    for d in places:
+        for p in places[d]:
+            if p not in redis_data.keys():
+                del places[d][p]
+
     # Places covered data
     places_covered = {k: len(places[k]) for k in places}
     places_covered["total"] = sum(places_covered.values())

@@ -135,6 +135,7 @@ def display_data():
     line_data = {k: [] for k in places}
     for place_type in places:
         for place in places[place_type]:
+            usual = get_usual(redis_data, place, last_updated)
             line_data[place_type].append(
                 {
                     "place": place,
@@ -145,7 +146,7 @@ def display_data():
                         )
                     ],
                     "current": redis_data[place]["current_popularity"][-1],
-                    "previous": redis_data[place]["current_popularity"][-2],
+                    "usual": usual,
                 }
             )
     for place_type in line_data:

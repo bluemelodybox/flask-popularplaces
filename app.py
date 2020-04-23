@@ -155,7 +155,6 @@ def display_data():
             reverse=True,
         )
 
-    # Retun final
     final = {
         "lastUpdatedTime": datetime.fromtimestamp(last_updated),
         "placesCovered": places_covered,

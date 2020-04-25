@@ -40,9 +40,31 @@
     "Yishun Neighbourhood Park": [1.4379231, 103.8353384]
   },
   "market": {
+    "ABC Brickworks Market & Food Centre": [1.2869047, 103.8081551],
     "Adam Food Centre": [1.3242264, 103.8141876],
+    "Albert Centre Market & Food Centre": [1.3011111, 103.8541667],
+    "Alexandra Village Food Centre": [1.286343, 103.8045261],
+    "Amoy Street Food Centre": [1.2794314, 103.8466744],
+    "Bedok Food Centre": [1.320342, 103.9554542],
+    "Beo Crescent Market": [1.2888084, 103.8273668],
+    "Berseh Food Centre": [1.3075, 103.8569444],
+    "Bukit Timah Market": [1.3394069, 103.776049],
     "Chomp Chomp Food Centre": [1.364454, 103.8666],
-    "Newton Food Centre": [1.311944, 103.839444]
+    "Commonwealth Crescent Market": [1.3069482, 103.800383],
+    "Dunman Food Centre": [1.3094266, 103.9018286],
+    "East Coast Lagoon Food Village": [1.3069299, 103.9349594],
+    "Geylang Serai Malay Market": [1.3167284, 103.8982767],
+    "Golden Mile Food Centre": [1.3033328, 103.8639264],
+    "Holland Village Market & Food Centre": [1.3112134, 103.7950362],
+    "Kallang Estate Market": [1.3073752, 103.8840077],
+    "Maxwell Food Centre": [1.2804882, 103.8444871],
+    "Newton Food Centre": [1.311944, 103.839444],
+    "North Bridge Road Market & Food Centre": [1.305729, 103.8639222],
+    "Pasir Panjang Food Centre": [1.275969, 103.7912521],
+    "Sembawang Hills Food Centre": [1.3722883, 103.8290075],
+    "Taman Jurong Market & Food Centre": [1.3344444, 103.7216667],
+    "Tanglin Halt Market": [1.300567, 103.7977142],
+    "Zion Riverside Food Centre": [1.2924035, 103.8310809]
   },
   "mall": {
     "100 AM": [1.2750063, 103.8435656],

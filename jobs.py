@@ -140,25 +140,18 @@ def timed_job():
         del r[k]
 
     # Get current date time
-    curr_time = datetime.now()
-    curr_hour = curr_time.hour
-    today_date = int(
-        datetime.timestamp(datetime(curr_time.year, curr_time.month, curr_time.day))
-    )
+    # curr_time = datetime.now()
+    # curr_hour = curr_time.hour
+    # today_date = int(
+    #     datetime.timestamp(datetime(curr_time.year, curr_time.month, curr_time.day))
+    # )
 
     # Add new location to redis that are in json
-    hours = {str(hour): [] for hour in range(24)}
     for k in places_set - redis_data.keys():
-        redis_data[k] = {
-            "current_popularity": [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            str(today_date): hours,
-        }
+        redis_data[k] = {"current_popularity": [0, 0, 0, 0, 0, 0, 0, 0, 0]}
 
     for k in redis_data:
         current_popularity = redis_data[k]["current_popularity"]
-        if redis_data[k].get(str(today_date)) == None:
-            redis_data[k][str(today_date)] = hours
-        day_popularity = redis_data[k][str(today_date)]
         if address.get(k):
             new_k = k + ", " + address[k]
         else:
@@ -166,7 +159,6 @@ def timed_job():
         current_pop, pop_times = get_pop_times(new_k)
         current_popularity.remove(current_popularity[0])
         current_popularity.append(current_pop)
-        day_popularity[str(curr_hour)].append(current_pop)
         if pop_times:
             redis_data[k]["popular_times"] = get_popularity_for_day(pop_times)
         else:

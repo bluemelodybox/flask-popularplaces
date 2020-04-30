@@ -2,7 +2,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import os, json, calendar, re
 import ssl, logging
 from time import time
-from datetime import timedelta
+from datetime import timedelta, datetime
 from urllib.parse import urlparse, quote_plus
 import urllib.request
 import redis
@@ -54,8 +54,6 @@ def get_pop_times(places):
         k + "=" + str(v) for k, v in params_url.items()
     )
 
-    logging.info("searchterm: " + search_url)
-
     # noinspection PyUnresolvedReferences
     gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 
@@ -98,23 +96,17 @@ def get_popularity_for_day(popularity):
     pop_json = [[0 for _ in range(24)] for _ in range(7)]
 
     for day in popularity:
-
         day_no, pop_times = day[:2]
-
         if pop_times:
             for hour_info in pop_times:
-
                 hour = hour_info[0]
                 pop_json[day_no - 1][hour] = hour_info[1]
-
                 # day wrap
                 if hour_info[0] == 23:
                     day_no = day_no % 7 + 1
-
     ret_popularity = [
         {"name": list(calendar.day_name)[d], "data": pop_json[d]} for d in range(7)
     ]
-
     return ret_popularity
 
 
@@ -147,12 +139,26 @@ def timed_job():
     for k in redis_data.keys() - places_set:
         del r[k]
 
+    # Get current date time
+    curr_time = datetime.now()
+    curr_hour = curr_time.hour
+    today_date = int(
+        datetime.timestamp(datetime(curr_time.year, curr_time.month, curr_time.day))
+    )
+
     # Add new location to redis that are in json
+    hours = {hour: [] for hour in range(24)}
     for k in places_set - redis_data.keys():
-        redis_data[k] = {"current_popularity": [0, 0, 0, 0, 0, 0, 0, 0, 0]}
+        redis_data[k] = {
+            "current_popularity": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            today_date: hours,
+        }
 
     for k in redis_data:
         current_popularity = redis_data[k]["current_popularity"]
+        if not redis_data[k].get(today_date):
+            redis_data[k][today_date] = hours
+        day_popularity = redis_data[k][today_date]
         if address.get(k):
             new_k = k + ", " + address[k]
         else:
@@ -160,6 +166,7 @@ def timed_job():
         current_pop, pop_times = get_pop_times(new_k)
         current_popularity.remove(current_popularity[0])
         current_popularity.append(current_pop)
+        day_popularity[curr_hour].append(current_pop)
         if pop_times:
             redis_data[k]["popular_times"] = get_popularity_for_day(pop_times)
         else:

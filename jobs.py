@@ -123,6 +123,7 @@ def timed_job():
         decode_responses=True,
     )
     redis_data = json.loads(r.get("data"))
+    redis_day = json.loads(r.get("day"))
 
     # Get all places from json
     with open("places.json", "r") as f:
@@ -139,16 +140,22 @@ def timed_job():
     for k in redis_data.keys() - places_set:
         del r[k]
 
-    # Get current date time
-    # curr_time = datetime.now()
-    # curr_hour = curr_time.hour
-    # today_date = int(
-    #     datetime.timestamp(datetime(curr_time.year, curr_time.month, curr_time.day))
-    # )
-
     # Add new location to redis that are in json
     for k in places_set - redis_data.keys():
         redis_data[k] = {"current_popularity": [0, 0, 0, 0, 0, 0, 0, 0, 0]}
+
+    # Get current date time
+    curr_time = datetime.now()
+    curr_hour = curr_time.hour
+    today_date = int(
+        datetime.timestamp(datetime(curr_time.year, curr_time.month, curr_time.day))
+    )
+
+    # Check if key exist to store today's data
+    if redis_day.get(str(today_date)) == None:
+        redis_day[str(today_date)] = {
+            place: {str(i): [] for i in range(24)} for place in redis_data.keys()
+        }
 
     for k in redis_data:
         current_popularity = redis_data[k]["current_popularity"]
@@ -163,6 +170,8 @@ def timed_job():
             redis_data[k]["popular_times"] = get_popularity_for_day(pop_times)
         else:
             redis_data[k]["popular_times"] = []
+        redis_day[str(today_date)][k][str(curr_hour)].append(current_pop)
+    r.set(name="day", value=json.dumps(redis_day))
     r.set(name="data", value=json.dumps(redis_data))
     creation_time = int(time())
     r.set(name="last_updated", value=creation_time)

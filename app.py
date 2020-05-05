@@ -130,15 +130,25 @@ def display_data():
         for place in places[place_type]:
             usual = get_usual(redis_data, place, last_updated)
             current = redis_data[place]["current_popularity"][-1]
+            # table_data.append(
+            #     {
+            #         "place": place,
+            #         "current": current,
+            #         "usual": usual,
+            #         "ratio": get_ratio(current, usual),
+            #         "changes": current - redis_data[place]["current_popularity"][-2],
+            #         "type": place_type.capitalize(),
+            #     }
+            # )
             table_data.append(
-                {
-                    "place": place,
-                    "current": current,
-                    "usual": usual,
-                    "ratio": get_ratio(current, usual),
-                    "changes": current - redis_data[place]["current_popularity"][-2],
-                    "type": place_type.capitalize(),
-                }
+                [
+                    place,
+                    current,
+                    usual,
+                    get_ratio(current, usual),
+                    current - redis_data[place]["current_popularity"][-2],
+                    place_type.capitalize(),
+                ]
             )
 
     # Line data

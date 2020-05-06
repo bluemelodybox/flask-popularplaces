@@ -112,7 +112,11 @@ def get_popularity_for_day(popularity):
 
 @sched.scheduled_job("interval", minutes=15)
 def timed_job():
+    # Run through all location, get current popularity and popular times
+    # Store data to redis cloud
+
     start = time()
+
     # Connect to rediscloud
     url = urlparse(os.environ.get("REDISCLOUD_URL"))
     r = redis.StrictRedis(
@@ -122,8 +126,16 @@ def timed_job():
         charset="utf-8",
         decode_responses=True,
     )
+
+    # Get current date time
+    curr_time = datetime.now()
+    curr_hour = curr_time.hour
+    today_date = int(
+        datetime.timestamp(datetime(curr_time.year, curr_time.month, curr_time.day))
+    )
+
+    # Get redis data
     redis_data = json.loads(r.get("data"))
-    redis_day = json.loads(r.get("day"))
 
     # Get all places from json
     with open("places.json", "r") as f:
@@ -144,19 +156,15 @@ def timed_job():
     for k in places_set - redis_data.keys():
         redis_data[k] = {"current_popularity": [0, 0, 0, 0, 0, 0, 0, 0, 0]}
 
-    # Get current date time
-    curr_time = datetime.now()
-    curr_hour = curr_time.hour
-    today_date = int(
-        datetime.timestamp(datetime(curr_time.year, curr_time.month, curr_time.day))
-    )
-
-    # Check if key exist to store today's data
-    if redis_day.get(str(today_date)) == None:
-        redis_day[str(today_date)] = {
+    # Check if day data exist in redis, if not exist create new key (for analysis)
+    if str(today_date) not in r.keys():
+        day_data = {
             place: {str(i): [] for i in range(24)} for place in redis_data.keys()
         }
+    else:
+        day_data = json.loads(r.get(str(today_date)))
 
+    # Get and store crowd data
     for k in redis_data:
         current_popularity = redis_data[k]["current_popularity"]
         if address.get(k):
@@ -170,8 +178,8 @@ def timed_job():
             redis_data[k]["popular_times"] = get_popularity_for_day(pop_times)
         else:
             redis_data[k]["popular_times"] = []
-        redis_day[str(today_date)][k][str(curr_hour)].append(current_pop)
-    r.set(name="day", value=json.dumps(redis_day))
+        day_data[k][str(curr_hour)].append(current_pop)
+    r.set(name=str(today_date), value=json.dumps(day_data))
     r.set(name="data", value=json.dumps(redis_data))
     creation_time = int(time())
     r.set(name="last_updated", value=creation_time)

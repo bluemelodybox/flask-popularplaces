@@ -156,6 +156,13 @@ def timed_job():
     for k in places_set - redis_data.keys():
         redis_data[k] = {"current_popularity": [0, 0, 0, 0, 0, 0, 0, 0, 0]}
 
+    # Redis cloud max storage is 30mb, need to delete past data to have enough storage for new data
+    days_keys = sorted(
+        [int(k) for k in r.keys() if k not in {"last_updated", "time_taken", "data"}]
+    )
+    if len(days_keys) > 60:
+        r.delete(str(days_keys[0]))
+
     # Check if day data exist in redis, if not exist create new key (for analysis)
     if str(today_date) not in r.keys():
         day_data = {
